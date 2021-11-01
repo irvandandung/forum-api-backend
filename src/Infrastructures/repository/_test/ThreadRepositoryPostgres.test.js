@@ -19,6 +19,7 @@ describe('ThreadRepositoryPostgres', () => {
 
   describe('addThread function', () => {
     it('should persis add thread correctly', async () => {
+      await UsersTableTestHelper.addUser({ id: 'user-123', username: 'dicoding' });
       const addThread = new AddThread({
         title: 'sebuah thread',
         body: 'body sebuah thread',
@@ -34,6 +35,7 @@ describe('ThreadRepositoryPostgres', () => {
 
     it('should return add thread correctly', async () => {
       // Arrange
+      await UsersTableTestHelper.addUser({ id: 'user-123', username: 'dicoding' });
       const addThread = new AddThread({
         title: 'sebuah thread',
         body: 'body sebuah thread',
@@ -56,6 +58,7 @@ describe('ThreadRepositoryPostgres', () => {
     describe('function verifyAvailableIdThread', () => {
       it('should not throw NotFoundError when id exist', async () => {
         // Arrange
+        await UsersTableTestHelper.addUser({ id: 'user-123', username: 'dicoding' });
         await ThreadsTableTestHelper.addThread({ id: 'thread-123' }); // memasukan thread baru dengan id thread-123
         const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {});
 
@@ -78,31 +81,13 @@ describe('ThreadRepositoryPostgres', () => {
       // Arrange
       await UsersTableTestHelper.addUser({ id: 'user-123', username: 'dicoding' });
       await ThreadsTableTestHelper.addThread({ id: 'thread-123', owner: 'user-123' }); // memasukan thread baru dengan id thread-123
-      const mockDataListComment = [
-        new ListComment({
-          id: 'comment-123',
-          username: 'dicoding',
-          created_at: '2021-08-08T07:19:09.775Z',
-          is_delete: false,
-          content: 'Sebuah Comment 1',
-        }),
-        new ListComment({
-          id: 'comment-126',
-          username: 'dicoding',
-          created_at: '2021-08-08T07:19:09.775Z',
-          is_delete: true,
-          content: 'sebuah content 2',
-        }),
-      ];
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {});
 
       // Action
-      const thread = await threadRepositoryPostgres.getDetailThread('thread-123', mockDataListComment);
+      const thread = await threadRepositoryPostgres.getDetailThread('thread-123');
       // Arrange
       expect(thread.id).toEqual('thread-123');
       expect(thread.username).toEqual('dicoding');
-      expect(thread.comments[0]).toStrictEqual(mockDataListComment[0]);
-      expect(thread.comments[1]).toStrictEqual(mockDataListComment[1]);
     });
   });
 });

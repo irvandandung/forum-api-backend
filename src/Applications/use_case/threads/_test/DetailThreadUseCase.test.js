@@ -22,7 +22,7 @@ describe('DetailThreadUseCase', () => {
       title: 'sebuah thread',
       body: 'body sebuah thread',
       username: 'dicoding',
-      comments: mockListComment,
+      created_at: '2021-08-09T07:19:09.775Z',
     });
 
     /** creating dependency of use case */
@@ -43,9 +43,10 @@ describe('DetailThreadUseCase', () => {
       threadRepository: mockThreadRepository,
     });
     const detailThread = await detailThreadUseCase.execute(threadId);
-
     // Assert
-    expect(detailThread).toStrictEqual(mockDetailThread);
+    expect(detailThread).toStrictEqual({ ...mockDetailThread, comments: mockListComment });
+    expect(mockThreadRepository.verifyAvailableIdThread).toBeCalledWith(threadId);
     expect(mockCommentRepository.getCommentsByThreadId).toBeCalledWith(threadId);
+    expect(mockThreadRepository.getDetailThread).toBeCalledWith(threadId);
   });
 });
