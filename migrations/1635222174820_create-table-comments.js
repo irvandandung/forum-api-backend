@@ -34,7 +34,10 @@ exports.up = (pgm) => {
       notNull: false,
     },
   });
+  pgm.addConstraint('comments', 'fk_comments.user_owner.id', 'FOREIGN KEY(owner) REFERENCES users(id) ON DELETE CASCADE');
+  pgm.addConstraint('comments', 'fk_comments.comment_thread.id', 'FOREIGN KEY(thread) REFERENCES threads(id) ON DELETE CASCADE');
 };
+
 
 exports.down = (pgm) => {
   pgm.dropTable('comments');
