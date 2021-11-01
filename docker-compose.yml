@@ -9,7 +9,13 @@ services:
       POSTGRES_DB: forumapi
     ports:
       - 5432
-  
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
   web:
     build: .
     command: sh -c "npm run migrate up && npm run start:dev"
