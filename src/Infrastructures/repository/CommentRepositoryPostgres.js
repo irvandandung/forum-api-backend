@@ -35,7 +35,6 @@ class CommentRepositoryPostgres extends CommentRepository {
     if (!result.rowCount) {
       throw new NotFoundError('id comment tidak ditemukan');
     }
-    return result;
   }
 
   async deleteComment(id) {

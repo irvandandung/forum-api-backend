@@ -25,7 +25,7 @@ describe('a ListComment entities', () => {
     expect(() => new ListComment(payload)).toThrowError('LIST_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
   });
 
-  it('must create ListComment object Correctly', () => {
+  it('must create ListComment object Correctly when is_delete is true', () => {
     // Arrange
     const payload = {
       id: 'comment-123',
@@ -44,5 +44,26 @@ describe('a ListComment entities', () => {
     expect(username).toEqual(payload.username);
     expect(date).toEqual(payload.created_at);
     expect(content).toEqual('**komentar telah dihapus**');
+  });
+
+  it('must create ListComment object Correctly when is_delete is false', () => {
+    // Arrange
+    const payload = {
+      id: 'comment-123',
+      content: 'comment sebuah thread',
+      username: 'dandung',
+      is_delete: false,
+      created_at: '2021-08-08T07:19:09.775Z',
+    };
+
+    // Action and Assert
+    const {
+      id, content, username, date,
+    } = new ListComment(payload);
+
+    expect(id).toEqual(payload.id);
+    expect(username).toEqual(payload.username);
+    expect(date).toEqual(payload.created_at);
+    expect(content).toEqual(payload.content);
   });
 });
