@@ -1,9 +1,6 @@
-const DeleteComment = require('../../../../Domains/comments/entities/DeleteComment');
 const CommentRepository = require('../../../../Domains/comments/CommentRepository');
 const ThreadRepository = require('../../../../Domains/threads/ThreadRepository');
 const DeleteCommentUseCase = require('../DeleteCommentUseCase');
-const AuthorizationError = require('../../../../Commons/exceptions/AuthorizationError');
-const InvariantError = require('../../../../Commons/exceptions/InvariantError');
 
 describe('DeleteCommentUseCase', () => {
   it('it should orchestrating the delete comment action correctly', async () => {
