@@ -38,7 +38,6 @@ exports.up = (pgm) => {
   pgm.addConstraint('comments', 'fk_comments.comment_thread.id', 'FOREIGN KEY(thread) REFERENCES threads(id) ON DELETE CASCADE');
 };
 
-
 exports.down = (pgm) => {
   pgm.dropTable('comments');
 };
